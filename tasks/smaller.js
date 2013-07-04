@@ -161,11 +161,11 @@ module.exports = function (grunt) {
             grunt.log.error(err);
             done(false);
           }
-          grunt.verbose.write('File saved.');
+          grunt.verbose.writeln('File saved.');
           done();
         });
       } else {
-        grunt.verbose.write('no response!');
+        grunt.log.error('No response from server! The "Smaller" server needs to be running at ' + options.url);
         done(false);
       }
     }));
