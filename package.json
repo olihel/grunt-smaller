@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://bitbucket.org/olihel/grunt-smaller.git"
+    "url": "git://github.com/olihel/grunt-smaller.git"
   },
   "bugs": {
     "url": "https://github.com/olihel/grunt-smaller/issues"
