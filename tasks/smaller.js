@@ -23,7 +23,7 @@ module.exports = function (grunt) {
   var TEMP_REQUEST_ZIP = TEMP_DIR_REQUEST + 'smaller.zip';
   var TEMP_RESPONSE_ZIP = TEMP_DIR_RESPONSE + 'smaller.zip';
 
-  grunt.registerMultiTask('smaller', 'Your task description goes here.', function () {
+  grunt.registerMultiTask('smaller', 'Minify js & css via "Smaller" minification service', function () {
     var options = this.options({
       'cleanup': true,
       'port': 80,
