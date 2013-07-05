@@ -33,6 +33,7 @@ module.exports = function (grunt) {
     });
 
     grunt.verbose.writeflags(options, 'Options');
+    grunt.verbose.writeflags(this.data, 'Data');
 
     if ((typeof options['in'] === undefined) || (options['in'] === '')) {
       grunt.log.error('"in" option is mandatory!');
