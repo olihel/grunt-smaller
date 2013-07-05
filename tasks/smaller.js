@@ -153,17 +153,25 @@ module.exports = function (grunt) {
         'Content-Length': fs.statSync(options.requestZip).size
       }
     }, function (error, response, body) {
-      if (response && body) {
-        grunt.verbose.writeflags(response.headers, 'Response headers');
-        fs.existsSync(options.responseDir) || fs.mkdirSync(options.responseDir);
-        fs.writeFile(options.responseZip, body, 'binary', function (err) {
-          if (err) {
-            grunt.log.error(err);
+      if (response) {
+        grunt.verbose.writeln('Status code: ', response.headers['x-smaller-status']);
+        if (response.headers) {
+          grunt.verbose.writeflags(response.headers, 'Response header');
+          if (response.headers['x-smaller-status'] === 'OK') {
+            fs.existsSync(options.responseDir) || fs.mkdirSync(options.responseDir);
+            fs.writeFile(options.responseZip, body, 'binary', function (err) {
+              if (err) {
+                grunt.log.error(err);
+                done(false);
+              }
+              grunt.verbose.writeln('File saved.');
+              done();
+            });
+          } else {
+            grunt.log.error('"Smaller" service error: ' + response.headers['x-smaller-message']);
             done(false);
           }
-          grunt.verbose.writeln('File saved.');
-          done();
-        });
+        }
       } else {
         grunt.log.error('No response from server! The "Smaller" server needs to be running at ' + options.url);
         done(false);
