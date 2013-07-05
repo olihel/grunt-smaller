@@ -57,20 +57,23 @@ module.exports = function (grunt) {
       return false;
     }
 
+    var sourceFiles = (function (files) {
+      files.push({
+        src: options['in']
+      });
+      files.forEach(function (f) {
+        f.dest = TEMP_DIR_REQUEST;
+      });
+      return files;
+    }(this.data.files));
+
     grunt.config.set('clean', {
       temp: [TEMP_DIR]
     });
 
     grunt.config.set('copy', {
       sourceFiles: {
-        files: (function getFiles(context) {
-          var files = JSON.parse(JSON.stringify(context.files));
-          files.push({src: options['in']});
-          files.forEach(function (f) {
-            f.dest = TEMP_DIR_REQUEST;
-          });
-          return files;
-        }(this))
+        files: sourceFiles
       }
     });
 
