@@ -75,7 +75,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
  * 2013-07-04   v0.1.1   Repo URL fixed
  * 2013-07-04   v0.1.0   Initial version
 
-<br>
+[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/ac287546f236c15a03b83a640ca00faa "githalytics.com")](http://githalytics.com/olihel/grunt-smaller)
 
 <sub>**Credits**</sub>  
 <sub>Thanks to [SinnerSchrader](http://www.sinnerschrader.com/) for support and the time to work on this project.</sub>
