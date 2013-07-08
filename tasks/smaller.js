@@ -11,6 +11,7 @@
 module.exports = function (grunt) {
   var fs = require('fs');
   var request = require('request');
+  var temp = require('temp');
 
   require('grunt-contrib-clean/tasks/clean')(grunt);
   require('grunt-contrib-copy/tasks/copy')(grunt);
@@ -26,7 +27,10 @@ module.exports = function (grunt) {
       'options': 'output:out-only=true'
     });
 
-    var tempDir = 'tmp.smaller/';
+    // use system temp folder for intermediate files if cleanup option is set (default),
+    // switch to local temp folder if cleanup option is not set (for testing purpose)
+    var tempDir = options.cleanup ? temp.path('smaller_') + '/' : 'tmp.smaller/';
+
     var tempDir_request = tempDir + 'request/';
     var tempDir_response = tempDir + 'response/';
     var tempFile_requestZip = tempDir_request + 'smaller.zip';
@@ -34,6 +38,7 @@ module.exports = function (grunt) {
 
     grunt.verbose.writeflags(options, 'Options');
     grunt.verbose.writeflags(this.data, 'Data');
+    grunt.verbose.writeln('Temp folder: ' + tempDir);
 
     if ((typeof options['in'] === undefined) || (options['in'] === '')) {
       grunt.log.error('"in" option is mandatory!');
@@ -68,6 +73,9 @@ module.exports = function (grunt) {
     }(this.data.files));
 
     grunt.config.set('clean', {
+      options: {
+        force: true
+      },
       temp: [tempDir]
     });
 
