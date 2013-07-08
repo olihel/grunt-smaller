@@ -17,12 +17,6 @@ module.exports = function (grunt) {
   require('grunt-contrib-compress/tasks/compress')(grunt);
   require('grunt-zip/tasks/zip')(grunt);
 
-  var TEMP_DIR = 'tmp.smaller/';
-  var TEMP_DIR_REQUEST = TEMP_DIR + 'request/';
-  var TEMP_DIR_RESPONSE = TEMP_DIR + 'response/';
-  var TEMP_REQUEST_ZIP = TEMP_DIR_REQUEST + 'smaller.zip';
-  var TEMP_RESPONSE_ZIP = TEMP_DIR_RESPONSE + 'smaller.zip';
-
   grunt.registerMultiTask('smaller', 'Minify js & css via "Smaller" minification service', function () {
     var options = this.options({
       'cleanup': true,
@@ -31,6 +25,12 @@ module.exports = function (grunt) {
       'processor': 'closure,uglifyjs,lessjs,yuiCompressor,cssembed',
       'options': 'output:out-only=true'
     });
+
+    var tempDir = 'tmp.smaller/';
+    var tempDir_request = tempDir + 'request/';
+    var tempDir_response = tempDir + 'response/';
+    var tempFile_requestZip = tempDir_request + 'smaller.zip';
+    var tempFile_responseZip = tempDir_response + 'smaller.zip';
 
     grunt.verbose.writeflags(options, 'Options');
     grunt.verbose.writeflags(this.data, 'Data');
@@ -62,13 +62,13 @@ module.exports = function (grunt) {
         src: options['in']
       });
       files.forEach(function (f) {
-        f.dest = TEMP_DIR_REQUEST;
+        f.dest = tempDir_request;
       });
       return files;
     }(this.data.files));
 
     grunt.config.set('clean', {
-      temp: [TEMP_DIR]
+      temp: [tempDir]
     });
 
     grunt.config.set('copy', {
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
     grunt.config.set('create', {
       manifest: {
         options: {
-          path: TEMP_DIR_REQUEST,
+          path: tempDir_request,
           data: {
             'tasks': [
               {
@@ -99,11 +99,11 @@ module.exports = function (grunt) {
     grunt.config.set('compress', {
       requestFile: {
         options: {
-          archive: TEMP_REQUEST_ZIP,
+          archive: tempFile_requestZip,
           mode: 'zip'
         },
         expand: true,
-        cwd: TEMP_DIR_REQUEST,
+        cwd: tempDir_request,
         src: ['**/*'],
         dest: ''
       }
@@ -113,16 +113,16 @@ module.exports = function (grunt) {
       data: {
         options: {
           url: options.protocol + options.host + ':' + options.port,
-          requestZip: TEMP_REQUEST_ZIP,
-          responseZip: TEMP_RESPONSE_ZIP,
-          responseDir: TEMP_DIR_RESPONSE
+          requestZip: tempFile_requestZip,
+          responseZip: tempFile_responseZip,
+          responseDir: tempDir_response
         }
       }
     });
 
     grunt.config.set('unzip', {
         responseFile: {
-          src: TEMP_RESPONSE_ZIP,
+          src: tempFile_responseZip,
           dest: options.target
         }
       });
