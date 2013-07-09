@@ -45,7 +45,7 @@ grunt.initConfig({
         'host': 'localhost', // "smaller" server needs to be set up & running
         'in': 'sampleFiles/js/app.json,sampleFiles/css/app.less',
         'out': 'js/app-min.js,css/app-base64-min.css',
-        'target': 'tmp.smaller/dist/',
+        'target': 'dist/',
         // further options with default values:
         'processor': 'closure,uglifyjs,lessjs,yuiCompressor,cssembed',
         'cleanup': true,  // clean up temp folder after running
