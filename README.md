@@ -71,6 +71,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+ * 2013-07-10   v0.1.4   Module dependencies updated
  * 2013-07-08   v0.1.3   Use [node-temp](https://npmjs.org/package/temp) for temporary files
  * 2013-07-05   v0.1.2   Files handling improved
  * 2013-07-04   v0.1.1   Repo URL fixed
