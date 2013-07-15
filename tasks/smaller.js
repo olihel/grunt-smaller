@@ -62,6 +62,17 @@ module.exports = function (grunt) {
       return false;
     }
 
+    var mergeConfig = function (taskName, config) {
+      var prop;
+      var originalConfig = grunt.config.get(taskName) || {};
+      for (prop in config) {
+        if (config.hasOwnProperty(prop)) {
+          originalConfig[prop] = config[prop];
+        }
+      }
+      grunt.config.set(taskName, originalConfig);
+    };
+
     var sourceFiles = (function (files) {
       files.push({
         src: options['in']
@@ -72,21 +83,23 @@ module.exports = function (grunt) {
       return files;
     }(this.data.files));
 
-    grunt.config.set('clean', {
-      options: {
-        force: true
-      },
-      temp: [tempDir]
+    mergeConfig('clean', {
+      smallerTemp: {
+        options: {
+          force: true
+        },
+        src: [tempDir]
+      }
     });
 
-    grunt.config.set('copy', {
-      sourceFiles: {
+    mergeConfig('copy', {
+      smallerSourceFiles: {
         files: sourceFiles
       }
     });
 
-    grunt.config.set('create', {
-      manifest: {
+    mergeConfig('create', {
+      smallerManifest: {
         options: {
           path: tempDir_request,
           data: {
@@ -104,8 +117,8 @@ module.exports = function (grunt) {
       }
     });
 
-    grunt.config.set('compress', {
-      requestFile: {
+    mergeConfig('compress', {
+      smallerRequestFile: {
         options: {
           archive: tempFile_requestZip,
           mode: 'zip'
@@ -117,8 +130,8 @@ module.exports = function (grunt) {
       }
     });
 
-    grunt.config.set('send', {
-      data: {
+    mergeConfig('send', {
+      smallerData: {
         options: {
           url: options.protocol + options.host + ':' + options.port,
           requestZip: tempFile_requestZip,
@@ -128,34 +141,34 @@ module.exports = function (grunt) {
       }
     });
 
-    grunt.config.set('unzip', {
-        responseFile: {
-          src: tempFile_responseZip,
-          dest: options.target
-        }
-      });
+    mergeConfig('unzip', {
+      smallerResponseFile: {
+        src: tempFile_responseZip,
+        dest: options.target
+      }
+    });
 
-    grunt.task.run('clean:temp',
-                   'copy:sourceFiles',
-                   'create:manifest',
-                   'compress:requestFile',
-                   'send:data',
-                   'unzip:responseFile');
+    grunt.task.run('clean:smallerTemp',
+                   'copy:smallerSourceFiles',
+                   'create:smallerManifest',
+                   'compress:smallerRequestFile',
+                   'send:smallerData',
+                   'unzip:smallerResponseFile');
 
     if (options.cleanup) {
-      grunt.task.run('clean:temp');
+      grunt.task.run('clean:smallerTemp');
     }
   });
 
-  grunt.registerTask('create:manifest', function () {
-    var options = grunt.config('create.manifest.options');
+  grunt.registerTask('create:smallerManifest', function () {
+    var options = grunt.config('create.smallerManifest.options');
     var manifestDir = options.path + 'META-INF/';
     fs.existsSync(manifestDir) || fs.mkdirSync(manifestDir);
     fs.writeFileSync(manifestDir + 'MAIN.json', JSON.stringify(options.data));
   });
 
-  grunt.registerTask('send:data', function () {
-    var options = grunt.config('send.data.options');
+  grunt.registerTask('send:smallerData', function () {
+    var options = grunt.config('send.smallerData.options');
     var done = this.async();
     fs.createReadStream(options.requestZip).pipe(request({
       url: options.url,
