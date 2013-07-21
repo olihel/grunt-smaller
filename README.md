@@ -1,4 +1,4 @@
-# grunt-smaller
+# grunt-smaller [![Dependency Status](https://gemnasium.com/olihel/grunt-smaller.png)](https://gemnasium.com/olihel/grunt-smaller)
 
 > Grunt plugin wrapper for [Smaller](https://github.com/KnisterPeter/Smaller), a minification service for javascript and stylesheets.
 
