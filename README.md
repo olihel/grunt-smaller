@@ -71,6 +71,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+ * 2016-02-25   v0.2.0   Dependencies updated
  * 2013-08-20   v0.1.9   Dependencies updated
  * 2013-07-29   v0.1.8   Dependencies updated
  * 2013-07-21   v0.1.7   Dependencies updated and badges added
@@ -82,7 +83,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
  * 2013-07-04   v0.1.1   Repo URL fixed
  * 2013-07-04   v0.1.0   Initial version
 
-[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/829fbcfa945767dad900f6cbfe9e286d "githalytics.com")](http://githalytics.com/olihel/grunt-smaller)
 
 <sub>**Credits**</sub>  
 <sub>Thanks to [SinnerSchrader](http://www.sinnerschrader.com/) for support and the time to work on this project.</sub>
