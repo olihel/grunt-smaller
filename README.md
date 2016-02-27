@@ -71,6 +71,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+ * 2016-02-27   v0.2.1   use npm's default semver range operator
  * 2016-02-25   v0.2.0   Dependencies updated
  * 2013-08-20   v0.1.9   Dependencies updated
  * 2013-07-29   v0.1.8   Dependencies updated
